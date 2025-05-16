@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/logo1.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created using create-react-app" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>ML TRAINER</title>
+    <style>
+      /* Global Reset / Basic Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      body {
+        background-color: #f0f2f5;
+        color: #333;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      /* Landing Page Container */
+      #landing-page {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        text-align: center;
+        padding: 0 1rem;
+        animation: fadeIn 1s ease-in;
+      }
+      
+      /* Hide the React root div by default */
+      #root {
+        display: none;
+      }
+      
+      /* Navbar */
+      nav {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        padding: 1rem 2rem;
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+      nav .logo {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #6f42c1;
+      }
+      
+      /* Hero Section */
+      .hero {
+        background: linear-gradient(135deg, #6f42c1, #9b59b6);
+        color: #fff;
+        padding: 3rem 2rem;
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 4rem auto 2rem auto;
+        animation: slideUp 1s ease-out;
+      }
+      .hero h1 {
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+      }
+      .hero p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+      
+      /* Button Group */
+      .button-group {
+        display: inline-flex;
+        gap: 1rem;
+      }
+      
+      /* Buttons */
+      .hero button {
+        border: none;
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 30px;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+      }
+      .btn-secondary {
+        background-color: #6f42c1;
+        color: #fff;
+      }
+      .btn-secondary:hover {
+        background-color: #532f8d;
+        transform: scale(1.05);
+      }
+      
+      /* Animations */
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes slideUp {
+        from { transform: translateY(50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Landing Page Content -->
+    <div id="landing-page">
+      <nav>
+        <div class="logo">Machine Learning Model Trainer</div>
+      </nav>
+      <section class="hero">
+        <h1>Welcome to ML Trainer</h1>
+        <p>
+          Discover which algorithm best fits your dataset and achieve accurate predictions, and enjoy a seamless experience. To continue, click on "Get Started."
+        </p>
+        <div class="button-group">
+          <button class="btn-secondary" id="get-started">Get Started</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- React App Container -->
+    <div id="root"></div>
+
+    <script>
+      // When the "Get Started" button is clicked:
+      document.getElementById("get-started").addEventListener("click", function() {
+        // Hide the landing page
+        document.getElementById("landing-page").style.display = "none";
+        // Show the React root div
+        document.getElementById("root").style.display = "block";
+      });
+    </script>
+  </body>
+</html>
