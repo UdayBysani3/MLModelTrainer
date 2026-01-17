@@ -178,7 +178,7 @@ function App() {
     formData.append('file', file);
     try {
       setAnalyzing(true);
-      const analyzeRes = await fetch('http://localhost:5000/analyze', {
+      const analyzeRes = await fetch('https://mlmodeltrainer-backend.onrender.com/analyze', {
         method: 'POST',
         body: formData,
       });
@@ -219,7 +219,7 @@ function App() {
     formData.append('show_metrics', 'true');
     try {
       setLoading(true);
-      const trainRes = await fetch('http://localhost:5000/train', {
+      const trainRes = await fetch('https://mlmodeltrainer-backend.onrender.com/train', {
         method: 'POST',
         body: formData,
       });
@@ -267,7 +267,7 @@ function App() {
     });
 
     try {
-      const res = await fetch('http://localhost:5000/predict', {
+      const res = await fetch('https://mlmodeltrainer-backend.onrender.com/predict', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ features })
