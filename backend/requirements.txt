@@ -5,3 +5,4 @@ joblib
 flask-cors
 matplotlib
 numpy
+gunicorn
