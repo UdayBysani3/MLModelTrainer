@@ -291,7 +291,7 @@ function App() {
       {/* Header */}
       <div className="fixed top-0 left-0 right-0 z-50 w-full p-4 md:p-6 flex justify-between items-center border-b border-white/10 bg-black/50 backdrop-blur-md">
         <div className="flex items-center gap-3">
-          <img src="/MainLogo.png" alt="ML Trainer Pro" className="h-10 w-auto object-contain" />
+          <img src="/MainLogo.png" alt="ML Trainer Pro" className="h-8 w-auto object-contain" />
           <div>
             <TypewriterEffect
               words={[
@@ -311,8 +311,60 @@ function App() {
 
       <motion.div className={cn(
         "relative z-10 flex-1 w-full mx-auto p-4 md:p-8 pt-28 md:pt-32 transition-all duration-700",
-        metrics ? "max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-8" : "max-w-2xl flex items-center justify-center"
+        metrics ? "max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-8" : "max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-start"
       )}>
+
+        {/* Project Info Section - Visible when no metrics */}
+        {!metrics && (
+          <div className="space-y-10 md:pt-1">
+            <div className="space-y-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-neutral-200 to-neutral-400 leading-tight">
+                Turn Data into <br /> <span className="text-violet-500">Intelligence</span>
+              </h1>
+              <p className="text-neutral-400 text-lg leading-relaxed max-w-lg">
+                No complex coding required. Simply upload your dataset, select your target, and train state-of-the-art machine learning models in seconds.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-8">
+              <div className="flex items-start gap-4 group">
+                <div className="p-3 rounded-xl bg-violet-500/10 border border-violet-500/20 group-hover:bg-violet-500/20 transition-colors">
+                  <Brain className="w-6 h-6 text-violet-400" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-lg mb-2">Smart Model Selection</h3>
+                  <p className="text-neutral-400 text-sm leading-relaxed">
+                    Automatically detects your problem type (Classification vs Regression) and suggests the optimal algorithms for your specific dataset.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 group">
+                <div className="p-3 rounded-xl bg-pink-500/10 border border-pink-500/20 group-hover:bg-pink-500/20 transition-colors">
+                  <BarChart3 className="w-6 h-6 text-pink-400" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-lg mb-2">Instant Visualization</h3>
+                  <p className="text-neutral-400 text-sm leading-relaxed">
+                    Gain deep insights with interactive Confusion Matrices, Feature Importance charts, and performance plots generated instantly.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 group">
+                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-colors">
+                  <Zap className="w-6 h-6 text-emerald-400" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-lg mb-2">Live Prediction</h3>
+                  <p className="text-neutral-400 text-sm leading-relaxed">
+                    Validate your model immediately. Enter new feature values and get real-time predictions directly in the dashboard.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Left Sidebar / Config Panel */}
         <div className={cn(metrics ? "lg:col-span-4" : "w-full", "space-y-6")}>
@@ -322,37 +374,47 @@ function App() {
           {!analyzed && (
             <div className="bg-gradient-to-br from-violet-600/15 via-purple-600/10 to-violet-600/15 border-2 border-violet-400/30 rounded-2xl p-5 backdrop-blur-sm shadow-lg shadow-violet-500/10">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg">
+                <div className="flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg">
                   <span className="text-white text-xl">💡</span>
                 </div>
                 <div className="flex-1 space-y-3">
                   <h3 className="text-base font-bold text-white">Quick Start</h3>
 
-                  <div className="space-y-2">
-                    <p className="text-sm text-neutral-300 leading-relaxed flex items-start gap-2">
-                      <span className="text-violet-400 mt-0.5">1.</span>
-                      <span>Upload CSV</span>
-                    </p>
-                    <p className="text-sm text-neutral-300 leading-relaxed flex items-start gap-2">
-                      <span className="text-violet-400 mt-0.5">2.</span>
-                      <span>Analyze data</span>
-                    </p>
-                    <p className="text-sm text-neutral-300 leading-relaxed flex items-start gap-2">
-                      <span className="text-violet-400 mt-0.5">3.</span>
-                      <span>Train model</span>
-                    </p>
-                  </div>
-
-                  <div className="bg-amber-500/10 border-2 border-amber-400/40 rounded-xl p-3 mt-3">
-                    <div className="flex items-start gap-2">
-                      <span className="text-amber-400 text-base mt-0.5">⚠️</span>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-500/20 text-violet-400 border border-violet-500/30 flex items-center justify-center text-xs font-bold mt-0.5">1</span>
                       <div>
-                        <p className="text-xs font-bold text-amber-300 mb-1">Important:</p>
-                        <p className="text-xs text-neutral-200 leading-relaxed">
-                          Target (Output) variable must be the <span className="text-amber-400 font-bold">last column</span>.
-                        </p>
+                        <span className="block text-sm font-semibold text-white">Upload your Excel CSV file containing your features and target variable.</span>
                       </div>
                     </div>
+
+                    <div className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-500/20 text-violet-400 border border-violet-500/30 flex items-center justify-center text-xs font-bold mt-0.5">2</span>
+                      <div>
+                        <span className="block text-sm font-semibold text-white">Analyse data to auto-detect problem type (Regression/Classification).</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-500/20 text-violet-400 border border-violet-500/30 flex items-center justify-center text-xs font-bold mt-0.5">3</span>
+                      <div>
+                        <span className="block text-sm font-semibold text-white">Choose a recommended algorithm, get overview of your data by metrics, and make predictions if you want.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-amber-500/10 border-2 border-amber-400/40 rounded-xl p-4 mt-5">
+                <div className="flex items-start gap-3">
+                  <span className="text-amber-400 text-xl mt-0.5">⚠️</span>
+                  <div className="flex-1">
+                    <p className="text-sm font-bold text-amber-300 mb-2">Important Requirements:</p>
+                    <ul className="text-xs text-neutral-200 space-y-1.5 list-disc ml-4">
+                      <li>The dataset must be in <span className="text-amber-400 font-bold">Excel CSV format</span>.</li>
+                      <li>The Target (Output) variable must be the <span className="text-amber-400 font-bold">last column</span>.</li>
+                      <li>Ensure your data is clean and pre-processed for accuracy.</li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -436,10 +498,7 @@ function App() {
             >
               <div className="absolute inset-0 bg-violet-500/5 z-0" />
               <div className="relative z-10">
-                <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2"><Zap className="w-4 h-4 text-yellow-400" /> Live Prediction</h3>
-                <p className="text-xs text-neutral-400 mb-4">
-                  These are the columns in the dataset you provided. Before filling the boxes, please review the dataset and provide the data for live predictions.
-                </p>
+                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2"><Zap className="w-4 h-4 text-yellow-400" /> Live Prediction</h3>
                 <div className="space-y-3 max-h-[300px] overflow-y-auto custom-scrollbar pr-2">
                   {independentVars.map((varName) => (
                     <div key={varName}>
@@ -512,6 +571,16 @@ function App() {
         )}
 
       </motion.div>
+
+      <footer className="w-full py-6 text-center border-t border-white/10 bg-black/20 backdrop-blur-md relative z-10 mt-auto">
+        <div className="flex items-center justify-center gap-2 text-neutral-500 text-xs md:text-sm">
+          <span>ML Model Trainer Pro</span>
+          <span className="w-1 h-1 rounded-full bg-neutral-700" />
+          <span className="text-neutral-600">Secure & Private Execution</span>
+          <span className="w-1 h-1 rounded-full bg-neutral-700" />
+          <span className="text-violet-500/80 font-mono">v1.0.0</span>
+        </div>
+      </footer>
 
       <Modal isOpen={showOverviewPreview} onClose={() => setShowOverviewPreview(false)} className="dark">
         {/* Same Modal Content as before but styled darker if needed, currently reusing logic */}
