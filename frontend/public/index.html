@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="MainLogo.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description"
+    content="Advanced ML Trainer - Train machine learning models with interactive visualizations" />
+  <meta name="keywords" content="machine learning, ML, AI, model training, data science" />
+  <link rel="apple-touch-icon" href="MainLogo.svg" />
+  <link rel="manifest" href="manifest.json" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <title>ML Model Trainer</title>
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Hide React root initially */
+    #root {
+      display: none;
+    }
+
+    /* Landing Page Wrapper */
+    #landing-page {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation: fadeIn 0.8s ease-in;
+    }
+
+    /* Animated Background Grid */
+    .grid-background {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, #80808012 1px, transparent 1px),
+        linear-gradient(to bottom, #80808012 1px, transparent 1px);
+      background-size: 24px 24px;
+      mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Gradient Overlay */
+    .gradient-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 20%, #0a0a0a);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Animated Beams */
+    .beams {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .beam {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.5), transparent);
+      animation: beam-slide 8s linear infinite;
+    }
+
+    .beam:nth-child(1) {
+      top: 20%;
+      width: 600px;
+      animation-delay: 0s;
+    }
+
+    .beam:nth-child(2) {
+      top: 40%;
+      width: 800px;
+      animation-delay: 2s;
+    }
+
+    .beam:nth-child(3) {
+      top: 60%;
+      width: 500px;
+      animation-delay: 4s;
+    }
+
+    .beam:nth-child(4) {
+      top: 80%;
+      width: 700px;
+      animation-delay: 6s;
+    }
+
+    @keyframes beam-slide {
+      0% {
+        left: -100%;
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.5;
+      }
+
+      90% {
+        opacity: 0.5;
+      }
+
+      100% {
+        left: 100%;
+        opacity: 0;
+      }
+    }
+
+    /* Content Container */
+    .content-wrapper {
+      position: relative;
+      z-index: 10;
+      max-width: 1200px;
+      width: 100%;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* Logo/Brand */
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+      animation: slideDown 1s ease-out;
+    }
+
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 800;
+      box-shadow: 0 8px 32px rgba(124, 58, 237, 0.3);
+    }
+
+    .brand-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #a855f7, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Hero Section */
+    .hero {
+      animation: slideUp 1s ease-out 0.2s both;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(to right, #fff, #a855f7, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: #94a3b8;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+    }
+
+    /* CTA Button */
+    .cta-button {
+      position: relative;
+      padding: 1rem 3rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow:
+        0 0 20px rgba(124, 58, 237, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 0 30px rgba(124, 58, 237, 0.6),
+        0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
+    }
+
+    .cta-button:active {
+      transform: translateY(0);
+    }
+
+    /* Features Grid */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 5rem;
+      animation: slideUp 1s ease-out 0.4s both;
+    }
+
+    .feature-card {
+      padding: 2rem;
+      background: linear-gradient(135deg, rgba(20, 20, 30, 0.8), rgba(30, 30, 45, 0.6));
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(124, 58, 237, 0.5);
+      box-shadow: 0 8px 32px rgba(124, 58, 237, 0.2);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 1rem;
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .feature-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #e2e8f0;
+    }
+
+    .feature-description {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-30px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .features {
+        grid-template-columns: 1fr;
+        margin-top: 3rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      .cta-button {
+        padding: 0.875rem 2rem;
+        font-size: 1rem;
+      }
+    }
+
+    /* Fade out animation for landing page */
+    .fade-out {
+      animation: fadeOut 0.5s ease-out forwards;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+    }
+
+    /* Typewriter Effect */
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .typewriter-container {
+      font-size: 1.5rem;
+      /* ~text-xl */
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .typewriter-container {
+        font-size: 2rem;
+        /* ~text-2xl */
+      }
+
+      .brand-logo {
+        height: 48px;
+        /* Slightly larger on desktop */
+      }
+    }
+
+    .cursor {
+      display: inline-block;
+      background-color: #8b5cf6;
+      /* violet-500 */
+      width: 4px;
+      height: 1.2em;
+      margin-left: 2px;
+      animation: blink 1s step-end infinite;
+    }
+
+    .text-white {
+      color: #fff;
+    }
+
+    .text-violet {
+      color: #8b5cf6;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Landing Page -->
+  <div id="landing-page">
+    <!-- Animated Background -->
+    <div class="grid-background"></div>
+    <div class="gradient-overlay"></div>
+
+    <!-- Animated Beams -->
+    <div class="beams">
+      <div class="beam"></div>
+      <div class="beam"></div>
+      <div class="beam"></div>
+      <div class="beam"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="content-wrapper">
+      <!-- Brand -->
+      <div class="brand">
+        <img src="MainLogo.png" alt="ML Trainer Pro" class="brand-logo" />
+        <div class="typewriter-container">
+          <span id="typewriter-text"></span><span class="cursor"></span>
+        </div>
+      </div>
+
+      <!-- Hero -->
+      <div class="hero">
+        <h1>Train ML Models<br />Like a Pro</h1>
+        <p class="hero-subtitle">
+          Advanced machine learning platform with interactive visualizations,
+          intelligent algorithm selection, and real-time model training.
+          Perfect for data scientists and ML enthusiasts.
+        </p>
+        <button class="cta-button" id="get-started">
+          Get Started →
+        </button>
+      </div>
+
+      <!-- Features -->
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3 class="feature-title">Smart Detection</h3>
+          <p class="feature-description">
+            Automatically detects problem type and recommends optimal algorithms
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3 class="feature-title">Rich Visualizations</h3>
+          <p class="feature-description">
+            ROC curves, confusion matrices, decision trees, and more
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Fast Training</h3>
+          <p class="feature-description">
+            Optimized for performance with automatic data sampling
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3 class="feature-title">Modern UI</h3>
+          <p class="feature-description">
+            Beautiful Aceternity UI with smooth animations and transitions
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- React App Container -->
+  <div id="root"></div>
+
+  <script>
+    // Typewriter Effect
+    const words = [
+      { text: "Model", class: "text-white" },
+      { text: "Trainer", class: "text-violet" }
+    ];
+
+    const typewriterElement = document.getElementById("typewriter-text");
+    let currentWordIndex = 0;
+    let currentCharIndex = 0;
+
+    // Flatten the text into a sequence of characters with their classes
+    // We will build the spans dynamically
+
+    function typeWriter() {
+      if (currentWordIndex < words.length) {
+        const wordObj = words[currentWordIndex];
+        const text = wordObj.text;
+
+        if (currentCharIndex < text.length) {
+          // Create/append the current character
+          const span = document.createElement("span");
+          span.textContent = text.charAt(currentCharIndex);
+          span.className = wordObj.class;
+          typewriterElement.appendChild(span);
+
+          currentCharIndex++;
+          setTimeout(typeWriter, 100); // Typing speed
+        } else {
+          // Word finished
+          currentWordIndex++;
+          currentCharIndex = 0;
+
+          // Add a space if not the last word
+          if (currentWordIndex < words.length) {
+            const space = document.createElement("span");
+            space.innerHTML = "&nbsp;";
+            typewriterElement.appendChild(space);
+            setTimeout(typeWriter, 100);
+          } else {
+            // Finished all words
+          }
+        }
+      }
+    }
+
+    // Start typing after a short delay
+    setTimeout(typeWriter, 500);
+
+    // Get Started button handler
+    document.getElementById("get-started").addEventListener("click", function () {
+      const landingPage = document.getElementById("landing-page");
+
+      // Add fade out animation
+      landingPage.classList.add("fade-out");
+
+      // Wait for animation to complete
+      setTimeout(() => {
+        landingPage.style.display = "none";
+        document.getElementById("root").style.display = "block";
+      }, 500);
+    });
+  </script>
+</body>
+
+</html>

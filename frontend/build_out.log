@@ -1,0 +1,16 @@
+
+> frontend@0.1.0 build
+> react-scripts build
+
+(node:19692) [DEP0176] DeprecationWarning: fs.F_OK is deprecated, use fs.constants.F_OK instead
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Creating an optimized production build...
+Failed to compile.
+
+Syntax error: C:\Users\udayb\OneDrive\Desktop\MLModelTrainer-main\frontend\src\index.css The `border-border` class does not exist. If `border-border` is a custom class, make sure it is defined within a `@layer` directive. (1:1)
+[1m[31m>[39m[22m[90m 1 | [39m[36m@tailwind[39m base[33m;[39m
+ [90m   | [39m[1m[31m^[39m[22m
+ [90m 2 | [39m[36m@tailwind[39m components[33m;[39m
+ [90m 3 | [39m[36m@tailwind[39m utilities[33m;[39m
+
+
